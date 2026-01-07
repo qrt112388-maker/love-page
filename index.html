@@ -1,169 +1,179 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>문하울 ♥ 백서진</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문하울 ♥ 백서진</title>
 
-  <style>
-    body {
-      margin: 0;
-      background-color: #ffb6c1;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+<style>
+:root {
+  --bg: #ffb6c1;
+  --text: #8b0000;
+  --title: #ff1493;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 6rem;
-      color: #ff1493;
-      margin-top: 15%;
-      animation: titleMove 3s ease-in-out infinite;
-      z-index: 10;
-      position: relative;
-    }
+body.dark {
+  --bg: #1c1c1c;
+  --text: #ffd1dc;
+  --title: #ff69b4;
+}
 
-    h2 {
-      text-align: center;
-      font-size: 2rem;
-      color: #ff6347;
-      margin-top: 20px;
-      z-index: 10;
-      position: relative;
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  text-align: center;
+  color: var(--text);
+  transition: 0.5s;
+}
 
-    .love-quotes {
-      text-align: center;
-      font-size: 1.2rem;
-      color: #8b0000;
-      margin-top: 40px;
-      z-index: 10;
-      position: relative;
-    }
+h1 {
+  font-size: 6rem;
+  color: var(--title);
+  margin-top: 10%;
+  animation: titleMove 3s infinite;
+}
 
-    /* 떠다니는 텍스트 */
-    .floating-text {
-      position: absolute;
-      font-size: 2rem;
-      color: #ff1493;
-      font-weight: bold;
-      animation: textFloat 6s ease-in-out infinite;
-      opacity: 0;
-      z-index: 5;
-    }
+h2 { font-size: 2rem; }
 
-    /* ❤️ 하트 (수정 완료) */
-    .heart {
-      position: absolute;
-      background: red;
-      transform: rotate(45deg);
-      animation: floatHeart linear infinite, fadeHeart ease-in-out infinite;
-      opacity: 0;
-      z-index: 1;
-    }
+.love-quotes p { margin: 6px; }
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      background: red;
-      border-radius: 50%;
-      width: 100%;
-      height: 100%;
-    }
+button {
+  margin: 10px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  background: hotpink;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
 
-    .heart::before {
-      top: -50%;
-      left: 0;
-    }
+.floating-text {
+  position: absolute;
+  font-size: 2rem;
+  color: var(--title);
+  font-weight: bold;
+  animation: textFloat 6s infinite;
+  opacity: 0;
+}
 
-    .heart::after {
-      left: -50%;
-      top: 0;
-    }
+.heart {
+  position: absolute;
+  background: red;
+  transform: rotate(45deg);
+  opacity: 0;
+  animation: floatHeart 6s linear, fadeHeart 6s ease-in-out;
+}
 
-    /* 애니메이션 */
-    @keyframes floatHeart {
-      0% {
-        transform: translate(0, 0) rotate(45deg);
-      }
-      100% {
-        transform: translate(300px, -600px) rotate(45deg);
-      }
-    }
+.heart::before, .heart::after {
+  content: "";
+  position: absolute;
+  background: red;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.heart::before { top: -50%; }
+.heart::after { left: -50%; }
 
-    @keyframes fadeHeart {
-      0% {
-        opacity: 0;
-      }
-      30% {
-        opacity: 0.8;
-      }
-      70% {
-        opacity: 0.8;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
+.secret {
+  display: none;
+  font-size: 1.3rem;
+  margin-top: 20px;
+  color: var(--title);
+}
 
-    @keyframes titleMove {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
+@keyframes floatHeart {
+  to { transform: translate(300px, -600px) rotate(45deg); }
+}
+@keyframes fadeHeart {
+  30%,70% { opacity: 0.8; }
+}
+@keyframes titleMove {
+  50% { transform: scale(1.1); }
+}
+@keyframes textFloat {
+  50% { opacity: 1; }
+}
 
-    @keyframes textFloat {
-      0% { transform: translateY(-50px); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(50px); opacity: 0; }
-    }
-  </style>
+/* 📱 모바일 */
+@media (max-width: 600px) {
+  h1 { font-size: 3rem; }
+  h2 { font-size: 1.4rem; }
+}
+</style>
 </head>
 
 <body>
 
-  <h1>문하울 ♥ 백서진</h1>
-  <h2>문하울과 백서진의 사랑이야기</h2>
+<h1>문하울 ♥ 백서진</h1>
+<h2 id="sub">문하울과 백서진의 사랑이야기</h2>
 
-  <div class="floating-text" style="top:30%; left:10%;">문하울</div>
-  <div class="floating-text" style="top:50%; left:70%;">백서진</div>
-  <div class="floating-text" style="top:70%; left:40%;">문하울</div>
-  <div class="floating-text" style="top:20%; left:80%;">백서진</div>
+<div class="floating-text" style="top:30%; left:10%">문하울</div>
+<div class="floating-text" style="top:60%; left:70%">백서진</div>
 
-  <div class="love-quotes">
-    <p>“너와 함께라면 어디든 행복해.”</p>
-    <p>“사랑은 평범한 하루를 특별하게 만들어.”</p>
-    <p>“내 마음은 언제나 네 곁에 있어.”</p>
-    <p>“네가 나의 세상이고, 나의 전부야.”</p>
-    <p>“사랑은 우리가 함께 만들어가는 이야기.”</p>
-  </div>
+<div class="love-quotes">
+  <p>“너와 함께라면 어디든 행복해.”</p>
+  <p>“사랑은 평범한 하루를 특별하게 만들어.”</p>
+</div>
 
-  <script>
-    // 하트 자동 생성
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
+<button onclick="changeMsg()">💌 메시지</button>
+<button onclick="toggleMusic()">🎵 음악</button>
+<button onclick="toggleDark()">🌙 다크모드</button>
+<button onclick="secretMsg()">🔒 비밀</button>
 
-      const size = Math.random() * 20 + 10;
-      heart.style.width = size + "px";
-      heart.style.height = size + "px";
+<div class="secret" id="secret">
+  💖 사실… 문하울은 백서진을 정말 많이 사랑해 💖
+</div>
 
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = window.innerHeight + "px";
+<audio id="bgm" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6c38cfeee6.mp3">
+</audio>
 
-      const duration = Math.random() * 5 + 5;
-      heart.style.animationDuration = `${duration}s, ${duration}s`;
+<script>
+/* 하트 */
+function heart() {
+  const h = document.createElement("div");
+  h.className = "heart";
+  const s = Math.random()*20+10;
+  h.style.width = h.style.height = s+"px";
+  h.style.left = Math.random()*innerWidth+"px";
+  h.style.top = innerHeight+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+}
+setInterval(heart,300);
 
-      document.body.appendChild(heart);
+/* 클릭 하트 */
+document.addEventListener("click",e=>{
+  for(let i=0;i<6;i++) heart();
+});
 
-      setTimeout(() => {
-        heart.remove();
-      }, duration * 1000);
-    }
+/* 메시지 */
+const msgs=["오늘도 사랑해","항상 네 편이야","영원히 함께"];
+let i=0;
+function changeMsg(){
+  sub.innerText = msgs[i++%msgs.length];
+}
 
-    setInterval(createHeart, 300);
-  </script>
+/* 음악 */
+const bgm=document.getElementById("bgm");
+function toggleMusic(){
+  bgm.paused ? bgm.play() : bgm.pause();
+}
+
+/* 다크모드 */
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+/* 비밀 */
+function secretMsg(){
+  document.getElementById("secret").style.display="block";
+}
+</script>
 
 </body>
 </html>
