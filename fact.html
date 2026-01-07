@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>문하울 ♥ 백서진</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffb6c1;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 6rem;
+      color: #ff1493;
+      margin-top: 15%;
+      animation: titleMove 3s ease-in-out infinite;
+      z-index: 10;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #ff6347;
+      margin-top: 20px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .love-quotes {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #8b0000;
+      margin-top: 40px;
+      z-index: 10;
+      position: relative;
+    }
+
+    /* 떠다니는 텍스트 */
+    .floating-text {
+      position: absolute;
+      font-size: 2rem;
+      color: #ff1493;
+      font-weight: bold;
+      animation: textFloat 6s ease-in-out infinite;
+      opacity: 0;
+      z-index: 5;
+    }
+
+    /* ❤️ 하트 (수정 완료) */
+    .heart {
+      position: absolute;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatHeart linear infinite, fadeHeart ease-in-out infinite;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      background: red;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+
+    .heart::before {
+      top: -50%;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -50%;
+      top: 0;
+    }
+
+    /* 애니메이션 */
+    @keyframes floatHeart {
+      0% {
+        transform: translate(0, 0) rotate(45deg);
+      }
+      100% {
+        transform: translate(300px, -600px) rotate(45deg);
+      }
+    }
+
+    @keyframes fadeHeart {
+      0% {
+        opacity: 0;
+      }
+      30% {
+        opacity: 0.8;
+      }
+      70% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes titleMove {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes textFloat {
+      0% { transform: translateY(-50px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(50px); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>문하울 ♥ 백서진</h1>
+  <h2>문하울과 백서진의 사랑이야기</h2>
+
+  <div class="floating-text" style="top:30%; left:10%;">문하울</div>
+  <div class="floating-text" style="top:50%; left:70%;">백서진</div>
+  <div class="floating-text" style="top:70%; left:40%;">문하울</div>
+  <div class="floating-text" style="top:20%; left:80%;">백서진</div>
+
+  <div class="love-quotes">
+    <p>“너와 함께라면 어디든 행복해.”</p>
+    <p>“사랑은 평범한 하루를 특별하게 만들어.”</p>
+    <p>“내 마음은 언제나 네 곁에 있어.”</p>
+    <p>“네가 나의 세상이고, 나의 전부야.”</p>
+    <p>“사랑은 우리가 함께 만들어가는 이야기.”</p>
+  </div>
+
+  <script>
+    // 하트 자동 생성
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+
+      const size = Math.random() * 20 + 10;
+      heart.style.width = size + "px";
+      heart.style.height = size + "px";
+
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + "px";
+
+      const duration = Math.random() * 5 + 5;
+      heart.style.animationDuration = `${duration}s, ${duration}s`;
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, duration * 1000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
