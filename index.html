@@ -24,40 +24,33 @@ body {
   font-family: Arial, sans-serif;
   color: var(--text);
   text-align: center;
-  overflow-x: hidden;   /* ✅ 세로 스크롤 허용 */
+  overflow-x: hidden;
   min-height: 100vh;
 }
 
 h1 {
   font-size: 5rem;
   color: var(--title);
-  margin-top: 12vh;
+  margin-top: 10vh;
   animation: titleMove 3s infinite;
-  z-index: 10;
-  position: relative;
 }
 
 h2 {
-  position: relative;
-  z-index: 10;
+  font-size: 2rem;
 }
 
-.love-quotes {
-  position: relative;
-  z-index: 10;
-}
-
-/* 🔘 버튼 영역 */
+/* 🔘 버튼 영역 (모바일 안전) */
 .controls {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999; /* ⭐ 최상위 */
+  margin: 20px auto 30px;
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 10px;
   justify-content: center;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.6);
+  padding: 14px 16px;
+  border-radius: 30px;
+  width: fit-content;
+  z-index: 10;
 }
 
 button {
@@ -70,7 +63,11 @@ button {
   cursor: pointer;
 }
 
-/* 떠다니는 텍스트 */
+.love-quotes {
+  position: relative;
+  z-index: 5;
+}
+
 .floating-text {
   position: absolute;
   font-size: 2rem;
@@ -78,7 +75,7 @@ button {
   font-weight: bold;
   animation: textFloat 6s infinite;
   opacity: 0;
-  z-index: 5;
+  z-index: 2;
 }
 
 /* ❤️ 하트 */
@@ -100,16 +97,15 @@ button {
   width: 100%;
   height: 100%;
 }
+
 .heart::before { top: -50%; }
 .heart::after { left: -50%; }
 
 .secret {
   display: none;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-top: 20px;
   color: var(--title);
-  position: relative;
-  z-index: 10;
 }
 
 /* 애니메이션 */
@@ -139,24 +135,25 @@ button {
 <h1>문하울 ♥ 백서진</h1>
 <h2 id="sub">문하울과 백서진의 사랑이야기</h2>
 
-<div class="floating-text" style="top:30%; left:10%">문하울</div>
-<div class="floating-text" style="top:60%; left:70%">백서진</div>
-
-<div class="love-quotes">
-  <p>“너와 함께라면 어디든 행복해.”</p>
-  <p>“사랑은 평범한 하루를 특별하게 만들어.”</p>
-</div>
-
-<div class="secret" id="secret">
-  💖 사실… 문하울은 백서진을 정말 많이 사랑해 💖
-</div>
-
-<!-- 🔘 버튼 -->
+<!-- 🔘 버튼 (항상 보임) -->
 <div class="controls">
   <button onclick="changeMsg()">💌 메시지</button>
   <button onclick="toggleMusic()">🎵 음악</button>
   <button onclick="toggleDark()">🌙 다크</button>
   <button onclick="secretMsg()">🔒 비밀</button>
+</div>
+
+<div class="floating-text" style="top:30%; left:10%;">문하울</div>
+<div class="floating-text" style="top:60%; left:70%;">백서진</div>
+
+<div class="love-quotes">
+  <p>“너와 함께라면 어디든 행복해.”</p>
+  <p>“사랑은 평범한 하루를 특별하게 만들어.”</p>
+  <p>“내 마음은 언제나 네 곁에 있어.”</p>
+</div>
+
+<div class="secret" id="secret">
+  💖 사실… 문하울은 백서진을 정말 많이 사랑해 💖
 </div>
 
 <audio id="bgm" loop>
@@ -165,39 +162,43 @@ button {
 
 <script>
 /* 하트 생성 */
-function heart() {
+function createHeart() {
   const h = document.createElement("div");
   h.className = "heart";
-  const s = Math.random()*20+10;
-  h.style.width = h.style.height = s+"px";
-  h.style.left = Math.random()*innerWidth+"px";
-  h.style.top = innerHeight+"px";
+  const s = Math.random() * 20 + 10;
+  h.style.width = h.style.height = s + "px";
+  h.style.left = Math.random() * innerWidth + "px";
+  h.style.top = innerHeight + "px";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
+  setTimeout(() => h.remove(), 6000);
 }
-setInterval(heart,300);
+setInterval(createHeart, 300);
 
-/* 메시지 */
-const msgs=["오늘도 사랑해","항상 네 편이야","영원히 함께"];
-let i=0;
-function changeMsg(){
-  sub.innerText = msgs[i++%msgs.length];
+/* 메시지 변경 */
+const msgs = [
+  "오늘도 사랑해",
+  "항상 네 편이야",
+  "영원히 함께"
+];
+let idx = 0;
+function changeMsg() {
+  document.getElementById("sub").innerText = msgs[idx++ % msgs.length];
 }
 
 /* 음악 */
-const bgm=document.getElementById("bgm");
-function toggleMusic(){
+const bgm = document.getElementById("bgm");
+function toggleMusic() {
   bgm.paused ? bgm.play() : bgm.pause();
 }
 
 /* 다크모드 */
-function toggleDark(){
+function toggleDark() {
   document.body.classList.toggle("dark");
 }
 
 /* 비밀 */
-function secretMsg(){
-  document.getElementById("secret").style.display="block";
+function secretMsg() {
+  document.getElementById("secret").style.display = "block";
 }
 </script>
 
