@@ -22,34 +22,55 @@ body {
   margin: 0;
   background: var(--bg);
   font-family: Arial, sans-serif;
-  overflow: hidden;
-  text-align: center;
   color: var(--text);
-  transition: 0.5s;
+  text-align: center;
+  overflow-x: hidden;   /* ✅ 세로 스크롤 허용 */
+  min-height: 100vh;
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: 5rem;
   color: var(--title);
-  margin-top: 10%;
+  margin-top: 12vh;
   animation: titleMove 3s infinite;
+  z-index: 10;
+  position: relative;
 }
 
-h2 { font-size: 2rem; }
+h2 {
+  position: relative;
+  z-index: 10;
+}
 
-.love-quotes p { margin: 6px; }
+.love-quotes {
+  position: relative;
+  z-index: 10;
+}
+
+/* 🔘 버튼 영역 */
+.controls {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999; /* ⭐ 최상위 */
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 button {
-  margin: 10px;
-  padding: 10px 18px;
+  padding: 10px 16px;
   border-radius: 20px;
   border: none;
   background: hotpink;
   color: white;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
 }
 
+/* 떠다니는 텍스트 */
 .floating-text {
   position: absolute;
   font-size: 2rem;
@@ -57,17 +78,21 @@ button {
   font-weight: bold;
   animation: textFloat 6s infinite;
   opacity: 0;
+  z-index: 5;
 }
 
+/* ❤️ 하트 */
 .heart {
   position: absolute;
   background: red;
   transform: rotate(45deg);
   opacity: 0;
+  z-index: 1;
   animation: floatHeart 6s linear, fadeHeart 6s ease-in-out;
 }
 
-.heart::before, .heart::after {
+.heart::before,
+.heart::after {
   content: "";
   position: absolute;
   background: red;
@@ -80,13 +105,16 @@ button {
 
 .secret {
   display: none;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-top: 20px;
   color: var(--title);
+  position: relative;
+  z-index: 10;
 }
 
+/* 애니메이션 */
 @keyframes floatHeart {
-  to { transform: translate(300px, -600px) rotate(45deg); }
+  to { transform: translate(200px, -600px) rotate(45deg); }
 }
 @keyframes fadeHeart {
   30%,70% { opacity: 0.8; }
@@ -119,13 +147,16 @@ button {
   <p>“사랑은 평범한 하루를 특별하게 만들어.”</p>
 </div>
 
-<button onclick="changeMsg()">💌 메시지</button>
-<button onclick="toggleMusic()">🎵 음악</button>
-<button onclick="toggleDark()">🌙 다크모드</button>
-<button onclick="secretMsg()">🔒 비밀</button>
-
 <div class="secret" id="secret">
   💖 사실… 문하울은 백서진을 정말 많이 사랑해 💖
+</div>
+
+<!-- 🔘 버튼 -->
+<div class="controls">
+  <button onclick="changeMsg()">💌 메시지</button>
+  <button onclick="toggleMusic()">🎵 음악</button>
+  <button onclick="toggleDark()">🌙 다크</button>
+  <button onclick="secretMsg()">🔒 비밀</button>
 </div>
 
 <audio id="bgm" loop>
@@ -133,7 +164,7 @@ button {
 </audio>
 
 <script>
-/* 하트 */
+/* 하트 생성 */
 function heart() {
   const h = document.createElement("div");
   h.className = "heart";
@@ -145,11 +176,6 @@ function heart() {
   setTimeout(()=>h.remove(),6000);
 }
 setInterval(heart,300);
-
-/* 클릭 하트 */
-document.addEventListener("click",e=>{
-  for(let i=0;i<6;i++) heart();
-});
 
 /* 메시지 */
 const msgs=["오늘도 사랑해","항상 네 편이야","영원히 함께"];
