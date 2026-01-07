@@ -50,7 +50,6 @@ h2 {
   padding: 14px 16px;
   border-radius: 30px;
   width: fit-content;
-  z-index: 10;
 }
 
 button {
@@ -65,7 +64,6 @@ button {
 
 .love-quotes {
   position: relative;
-  z-index: 5;
 }
 
 .floating-text {
@@ -75,7 +73,6 @@ button {
   font-weight: bold;
   animation: textFloat 6s infinite;
   opacity: 0;
-  z-index: 2;
 }
 
 /* ❤️ 하트 */
@@ -84,7 +81,6 @@ button {
   background: red;
   transform: rotate(45deg);
   opacity: 0;
-  z-index: 1;
   animation: floatHeart 6s linear, fadeHeart 6s ease-in-out;
 }
 
@@ -135,7 +131,7 @@ button {
 <h1>문하울 ♥ 백서진</h1>
 <h2 id="sub">문하울과 백서진의 사랑이야기</h2>
 
-<!-- 🔘 버튼 (항상 보임) -->
+<!-- 🔘 버튼 -->
 <div class="controls">
   <button onclick="changeMsg()">💌 메시지</button>
   <button onclick="toggleMusic()">🎵 음악</button>
@@ -175,11 +171,7 @@ function createHeart() {
 setInterval(createHeart, 300);
 
 /* 메시지 변경 */
-const msgs = [
-  "오늘도 사랑해",
-  "항상 네 편이야",
-  "영원히 함께"
-];
+const msgs = ["오늘도 사랑해", "항상 네 편이야", "영원히 함께"];
 let idx = 0;
 function changeMsg() {
   document.getElementById("sub").innerText = msgs[idx++ % msgs.length];
@@ -196,9 +188,14 @@ function toggleDark() {
   document.body.classList.toggle("dark");
 }
 
-/* 비밀 */
+/* 🔐 비밀 메시지 (비밀번호: love) */
 function secretMsg() {
-  document.getElementById("secret").style.display = "block";
+  const pw = prompt("비밀번호를 입력하세요 💖");
+  if (pw === "love") {
+    document.getElementById("secret").style.display = "block";
+  } else if (pw !== null) {
+    alert("비밀번호가 틀렸어요 😢");
+  }
 }
 </script>
 
